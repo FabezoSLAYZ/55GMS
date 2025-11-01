@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="notranslate" translate="no">
-
 <head>
-  <title>Google</title>
+  <title>HalloweenCOlaB</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <script src="/assets/js/script.js?v=13"></script>
   <script src="/socket.io/socket.io.js"></script>
@@ -12,20 +11,322 @@
   <script src="/assets/js/easteregg.min.js" async></script>
   <meta charset="utf-8" />
   <meta http-equiv="Cache-control" content="public" />
-  <link href="/assets/css/science.css" rel="stylesheet" />
   <script src="/assets/sj/hiring.js?v=1" defer></script>
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css" />
   <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #00ff41;
+      --primary-dark: #00cc33;
+      --secondary: #39ff14;
+      --accent: #00ff88;
+      --bg-dark: #0a0e0a;
+      --bg-darker: #000000;
+      --text: #e0ffe0;
+      --text-muted: #88cc88;
+      --glass-bg: rgba(10, 14, 10, 0.95);
+      --glass-border: rgba(0, 255, 65, 0.3);
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #000000;
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* Tab Bar */
+    #tab-bar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary) transparent;
+    }
+
+    #tab-bar::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    #tab-bar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #tab-bar::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    #tabs {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 255, 65, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+      min-width: 100px;
+      max-width: 200px;
+      position: relative;
+    }
+
+    .tab:hover {
+      background: rgba(0, 255, 65, 0.1);
+      border-color: var(--primary);
+    }
+
+    .tab.active {
+      background: rgba(0, 255, 65, 0.15);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+    }
+
+    .tab-favicon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .tab-title {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .tab .close {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.2rem 0.3rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .tab .close:hover {
+      color: var(--primary);
+      background: rgba(0, 255, 65, 0.1);
+    }
+
+    #new-tab {
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    #new-tab:hover {
+      background: rgba(0, 255, 65, 0.1);
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+    }
+
+    /* Proxy Navigation Bar */
+    .proxy-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 0.75rem 1rem;
+    }
+
+    .navbar-proxy {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .navbar-left, .navbar-right {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .navbar-link {
+      background: rgba(0, 255, 65, 0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      padding: 0.6rem 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .navbar-link:hover {
+      background: rgba(0, 255, 65, 0.15);
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+    }
+
+    .navbar-link:active {
+      transform: scale(0.95);
+    }
+
+    #proxy-address {
+      flex: 1;
+      background: rgba(0, 255, 65, 0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      padding: 0.75rem 1rem;
+      border-radius: 50px;
+      outline: none;
+      font-size: 1rem;
+      transition: all 0.3s;
+      min-width: 0;
+    }
+
+    #proxy-address:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+      background: rgba(0, 255, 65, 0.08);
+    }
+
+    #proxy-address::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Autocomplete */
+    #autocomplete {
+      position: fixed;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      backdrop-filter: blur(20px);
+      display: none;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    #autocomplete div {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text);
+    }
+
+    #autocomplete div:hover {
+      background: rgba(0, 255, 65, 0.1);
+      color: var(--primary);
+    }
+
+    /* Frames Container */
+    #frames {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    #frames iframe {
+      display: none;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    #frames iframe.active {
+      display: block;
+    }
+
+    /* Loader */
+    .loader {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(0, 255, 65, 0.2);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+      z-index: 9999;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .navbar-proxy {
+        flex-wrap: wrap;
+      }
+      
+      #proxy-address {
+        order: 3;
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+
+      .tab {
+        min-width: 80px;
+        max-width: 150px;
+        padding: 0.4rem 0.7rem;
+      }
+
+      .navbar-link {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.9rem;
+      }
+
+      #tab-bar {
+        padding: 0.4rem 0.7rem;
+      }
+
+      .proxy-container {
+        padding: 0.5rem 0.7rem;
+      }
+    }
+  </style>
 </head>
-
-<body style="overflow: hidden">
-
+<body>
   <div id="tab-bar">
     <div id="tabs">
       <button id="new-tab" class="btn"><i class="fa-solid fa-plus"></i></button>
     </div>
   </div>
-
 
   <div class="proxy-container">
     <nav class="navbar-proxy">
@@ -34,10 +335,8 @@
         <a id="prx-fwd" class="navbar-link pro"><i class="fa-solid fa-arrow-right"></i></a>
         <a id="prx-refresh" class="navbar-link pro"><i class="fa-solid fa-rotate-right"></i></a>
       </div>
-
       <input type="text" id="proxy-address" placeholder="Search Google or Enter an URL" class="search navbar-input"
         autocomplete="off" />
-
       <div class="navbar-right">
         <a id="prx-home" class="navbar-link pro"><i class="fa-solid fa-house"></i></a>
         <a id="prx-fullscreen" class="navbar-link pro"><i class="fa-solid fa-expand"></i></a>
@@ -45,12 +344,9 @@
       </div>
     </nav>
   </div>
+
   <div id="autocomplete" class="autocomplete"></div>
-
   <div class="loader"></div>
-
   <div id="frames"></div>
-
 </body>
-
 </html>
