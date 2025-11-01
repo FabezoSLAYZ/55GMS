@@ -1,69 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
   <script src="/assets/js/font.js"></script>
   <script src="/assets/js/randomSentence.js?v=3"></script>
-  <link rel="stylesheet" type="text/css" href="/assets/css/index.css?v=1" />
-  <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=2" />
-  <link rel="stylesheet" href="/assets/css/nav.css?v=3" />
-  <title>Google</title>
+  <title>HalloweenCOlaB</title>
   <meta name="google" content="notranslate" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Rednotsus" />
   <meta charset="utf-8">
   <meta http-equiv="Cache-control" content="public">
-  <meta name="description" content="55GMS - Reds Exploit Corner - Join the discord for links!" />
+  <meta name="description" content="HalloweenCOlaB - Your Spooky Gateway to Freedom" />
   <script src="/assets/js/script.js?v=13"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/assets/js/easteregg.min.js" async></script>
   <script src="/assets/sj/index.js" defer></script>
   <script src="/assets/sj/hiring.js?v=1" defer></script>
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #00ff41;
+      --primary-dark: #00cc33;
+      --secondary: #39ff14;
+      --accent: #00ff88;
+      --bg-dark: #0a0e0a;
+      --bg-darker: #000000;
+      --text: #e0ffe0;
+      --text-muted: #88cc88;
+      --glass-bg: rgba(10, 14, 10, 0.8);
+      --glass-border: rgba(0, 255, 65, 0.3);
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 255, 65, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(57, 255, 20, 0.06) 0%, transparent 50%),
+        linear-gradient(180deg, #000000 0%, #0a0e0a 50%, #000000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    .bg-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 20s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      25% { transform: translateY(-100px) translateX(50px); }
+      50% { transform: translateY(-50px) translateX(-50px); }
+      75% { transform: translateY(-150px) translateX(100px); }
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      background: var(--glass-bg);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1rem 2rem;
+    }
+
+    .navbar {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .navbar a:not(.title) {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.95rem;
+    }
+
+    .navbar a:not(.title):hover {
+      background: rgba(0, 255, 65, 0.1);
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+
+    #titles {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient 3s ease infinite;
+      background-size: 200% 200%;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #sub {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* Search Bar */
+    .searchbar {
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      display: flex;
+      gap: 1rem;
+      background: var(--glass-bg);
+      border: 2px solid var(--glass-border);
+      border-radius: 50px;
+      padding: 0.75rem 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .searchbar:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+    }
+
+    .form__input {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.1rem;
+      outline: none;
+    }
+
+    .form__input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Quick Links */
+    .quicklinks {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .quicklink {
+      aspect-ratio: 1;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .quicklink:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+    }
+
+    .shortcut {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+    }
+
+    /* Info Buttons */
+    .info {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      gap: 1rem;
+      z-index: 100;
+    }
+
+    .infobtn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 1.5rem;
+      color: var(--primary);
+      transition: all 0.3s;
+    }
+
+    .infobtn:hover {
+      background: rgba(0, 255, 65, 0.2);
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 255, 65, 0.3);
+    }
+
+    /* Ad Center */
+    .adcenter {
+      max-width: 728px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      #titles {
+        font-size: 2.5rem;
+      }
+
+      .navbar {
+        justify-content: center;
+      }
+
+      .navbar a {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+      }
+
+      .quicklinks {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 1rem;
+      }
+
+      .info {
+        bottom: 1rem;
+        right: 1rem;
+      }
+
+      .infobtn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Animated background -->
+  <div class="bg-particles" id="particles"></div>
+
+  <!-- Navigation -->
   <nav>
     <div class="navbar">
-      <a id="nav-title" class='title' href="/">Reds Exploit Corner</a>
-      <a href="/g"><i class="fa-solid fa-gamepad">&nbsp;</i>Games</a>
-      <a href="/a"><i class="fa-solid fa-box-archive">&nbsp;</i>Apps</a>
-      <a href="/-"><i class="fa-solid fa-tv">&nbsp;</i>Media</a>
-      <a href="/e"><i class="fa-solid fa-robot"></i>&nbsp;</i>AI</a>
-      <a href="/s"><i class="fa-solid fa-gears">&nbsp;</i>Settings</a>
-      <a href="/chat"><i class="fa-solid fa-comments">&nbsp;</i></a>
+      <a id="nav-title" class='title' href="/">🎃 HalloweenCOlaB</a>
+      <a href="/g"><i class="fa-solid fa-gamepad"></i>&nbsp;Games</a>
+      <a href="/a"><i class="fa-solid fa-box-archive"></i>&nbsp;Apps</a>
+      <a href="/-"><i class="fa-solid fa-tv"></i>&nbsp;Media</a>
+      <a href="/e"><i class="fa-solid fa-robot"></i>&nbsp;AI</a>
+      <a href="/s"><i class="fa-solid fa-gears"></i>&nbsp;Settings</a>
+      <a href="/chat"><i class="fa-solid fa-comments"></i></a>
       <a href="/profile"><i class="fa-solid fa-user"></i></a>
     </div>
   </nav>
-  <h1 id="titles">Reds Exploit Corner</h1>
-  <h1 id="sub">
-    &nbsp;
-  </h1>
 
-  <div style="text-align: center">
-    <br />
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1 id="titles">HalloweenCOlaB</h1>
+    <h1 id="sub">Your Spooky Gateway to Freedom</h1>
+
     <form class="searchbar">
       <input tag="searchbar" placeholder="Search Google or Enter a Link" class="form__input" autocomplete="off">
     </form>
+
+    <!-- Quick Links -->
     <div class="quicklinks">
-      <a class="quicklink" href="d"><img class='shortcut' src="/img/shortcuts/Dashboard.webp"></a>
-      <a class="quicklink" onclick="hire('https://discord.gg')"><img class='shortcut' src="/img/shortcuts/dc.webp"></a>
-      <a class="quicklink" onclick="hire('https://www.espn.com/watch/')"><img class='shortcut'
-          src="/img/shortcuts/ESPN.webp"></a>
-      <a class="quicklink" href='e'><img class='shortcut' src="/img/shortcuts/freegpt.webp"></a>
-      <a class="quicklink" onclick="hire('https://github.com')"><img class='shortcut'
-          src="/img/shortcuts/GitHub.webp"></a>
-      <a class="quicklink" onclick="hire('https://google.com')"><img class='shortcut'
-          src="/img/shortcuts/Google.webp"></a>
-      <a class="quicklink" onclick="hire('https://nowgg.lol')"><img class='shortcut'
-          src="/img/shortcuts/nowgg.webp"></a>
-      <a class="quicklink" href='-'><img class='shortcut' src="/img/shortcuts/gmsmovies.webp"></a>
-      <a class="quicklink" onclick="hire('https://tiktok.com')"><img class='shortcut' src="/img/shortcuts/tt.webp"></a>
-      <a class="quicklink" onclick="hire('https://twitch.tv')"><img class='shortcut'
-          src="/img/shortcuts/Twitch.webp"></a>
+      <a class="quicklink" href="d"><img class='shortcut' src="/img/shortcuts/Dashboard.webp" alt="Dashboard"></a>
+      <a class="quicklink" onclick="hire('https://discord.gg')"><img class='shortcut' src="/img/shortcuts/dc.webp" alt="Discord"></a>
+      <a class="quicklink" onclick="hire('https://www.espn.com/watch/')"><img class='shortcut' src="/img/shortcuts/ESPN.webp" alt="ESPN"></a>
+      <a class="quicklink" href='e'><img class='shortcut' src="/img/shortcuts/freegpt.webp" alt="AI"></a>
+      <a class="quicklink" onclick="hire('https://github.com')"><img class='shortcut' src="/img/shortcuts/GitHub.webp" alt="GitHub"></a>
+      <a class="quicklink" onclick="hire('https://google.com')"><img class='shortcut' src="/img/shortcuts/Google.webp" alt="Google"></a>
+      <a class="quicklink" onclick="hire('https://nowgg.lol')"><img class='shortcut' src="/img/shortcuts/nowgg.webp" alt="Now.gg"></a>
+      <a class="quicklink" href='-'><img class='shortcut' src="/img/shortcuts/gmsmovies.webp" alt="Movies"></a>
+      <a class="quicklink" onclick="hire('https://tiktok.com')"><img class='shortcut' src="/img/shortcuts/tt.webp" alt="TikTok"></a>
+      <a class="quicklink" onclick="hire('https://twitch.tv')"><img class='shortcut' src="/img/shortcuts/Twitch.webp" alt="Twitch"></a>
     </div>
   </div>
-  <br>
+
+  <!-- Ad Center -->
   <center>
     <div class="adcenter">
       <script type="text/javascript">
@@ -78,12 +377,27 @@
       <script type="text/javascript" src="//www.abc.com/b3a5490f293f185d1d7b4c6e5a0c1c50/invoke.js"></script>
     </div>
   </center>
+
+  <!-- Info Buttons -->
   <div class="info">
     <a class="infobtn" href='https://discord.gg/xdaJ6Wytsu'><i class="fa-brands fa-discord"></i></a>
     <a class="infobtn" href="https://github.com/55gms"><i class="fa-brands fa-github"></i></a>
   </div>
 
   <script src="https://cdn.jsdelivr.net/gh/docklib/partners@master/partner-7a44b4ab.js?v=1"></script>
-</body>
 
+  <script>
+    // Create animated particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      particlesContainer.appendChild(particle);
+    }
+  </script>
+</body>
 </html>
